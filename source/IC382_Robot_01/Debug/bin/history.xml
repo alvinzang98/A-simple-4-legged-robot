@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<history>
+   <processor signature="arm-none-eabi-gcc -mcpu=cortex-m0 -mthumb -g2 -Map=IC382_Robot_01.map -O0 --gc-sections -LC:\Users\student\AppData\Roaming\CooCox\CoIDE\configuration\ProgramData\D02 -TC:\Users\student\AppData\Roaming\CooCox\CoIDE\configuration\ProgramData\D02/arm-gcc-link.ld -g">
+      <target file="IC382_Robot_01.elf" lastModified="169ffbf2902">
+         <source file="..\obj\system_NUC131.o" lastModified="169ffbc2723"/>
+         <source file="..\obj\uart.o" lastModified="169ffbc1bd8"/>
+         <source file="..\obj\i2c.o" lastModified="169ffbc190a"/>
+         <source file="..\obj\clk.o" lastModified="169ffbc24f1"/>
+         <source file="..\obj\adc.o" lastModified="169ffbc2619"/>
+         <source file="..\obj\bpwm.o" lastModified="169ffbc19a6"/>
+         <source file="..\obj\startup_NUC1xx.o" lastModified="169ffbc1a71"/>
+         <source file="..\obj\sys.o" lastModified="169ffbc1c55"/>
+         <source file="..\obj\syscalls.o" lastModified="169ffbc259c"/>
+         <source file="..\obj\wdt.o" lastModified="169ffbc26a6"/>
+         <source file="..\obj\spi.o" lastModified="169ffbc187d"/>
+         <source file="..\obj\fmc.o" lastModified="169ffbc27cf"/>
+         <source file="..\obj\timer.o" lastModified="169ffbc1a23"/>
+         <source file="..\obj\gpio.o" lastModified="169ffbc23a8"/>
+         <source file="..\obj\can.o" lastModified="169ffbc232b"/>
+         <source file="..\obj\main.o" lastModified="169ffbf26b0"/>
+         <source file="..\obj\wwdt.o" lastModified="169ffbc2435"/>
+         <source file="..\obj\pwm.o" lastModified="169ffbc1b1d"/>
+      </target>
+   </processor>
+</history>

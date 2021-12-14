@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dependencies>
+   <includePath signature="/IF:\D02 - 20190408\components\coocox-master\NUC131_BSP_CMSIS\source /IF:\D02 - 20190408 /IF:\D02 - 20190408\components\coocox-master\cmsis_core /IF:\D02 - 20190408\components\coocox-master\NUC131_BSP_CMSIS /IF:\D02 - 20190408\components\coocox-master\cmsis_core\source /IF:\D02 - 20190408\components\coocox-master">
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\uart.h" lastModified="16870e78680">
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\pwm.h" lastModified="16870e78680">
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\bpwm.c" lastModified="16870e78680">
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\NUC131.h"/>
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\timer.h" lastModified="16870e78680">
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\uart.c" lastModified="16870e78a68">
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\NUC131.h"/>
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\pwm.c" lastModified="16870e78680">
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\NUC131.h"/>
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\startup_NUC1xx.c" lastModified="16870e78680">
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\timer.c" lastModified="16870e78680">
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\NUC131.h"/>
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\NUC131.h" lastModified="16870e78680">
+         <include file="..\..\..\components\coocox-master\cmsis_core\source\core_cm0.h"/>
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\system_NUC131.h"/>
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\sys.h"/>
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\adc.h"/>
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\can.h"/>
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\fmc.h"/>
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\gpio.h"/>
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\i2c.h"/>
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\pwm.h"/>
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\bpwm.h"/>
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\spi.h"/>
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\timer.h"/>
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\wdt.h"/>
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\wwdt.h"/>
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\uart.h"/>
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\clk.h"/>
+      </source>
+      <source file="..\..\..\components\coocox-master\cmsis_core\source\core_cm0.h" lastModified="16870e78298">
+         <include file="..\..\..\components\coocox-master\cmsis_core\source\core_cmInstr.h"/>
+         <include file="..\..\..\components\coocox-master\cmsis_core\source\core_cmFunc.h"/>
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\wwdt.h" lastModified="16870e78680">
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\clk.h" lastModified="16870e78680">
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\wwdt.c" lastModified="16870e78680">
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\NUC131.h"/>
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\sys.h" lastModified="16870e78680">
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\clk.c" lastModified="16870e78680">
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\NUC131.h"/>
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\sys.c" lastModified="16870e78680">
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\NUC131.h"/>
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\can.h" lastModified="16870e78680">
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\NUC131.h"/>
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\adc.h" lastModified="16870e78680">
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\NUC131.h"/>
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\can.c" lastModified="16870e78680">
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\NUC131.h"/>
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\wdt.h" lastModified="16870e78680">
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\adc.c" lastModified="16870e78680">
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\NUC131.h"/>
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\wdt.c" lastModified="16870e78680">
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\NUC131.h"/>
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\gpio.h" lastModified="16870e78680">
+      </source>
+      <source file="..\..\..\components\coocox-master\C_library\source\syscalls.c" lastModified="16870e78e50">
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\gpio.c" lastModified="16870e78680">
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\NUC131.h"/>
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\i2c.h" lastModified="16870e78680">
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\NUC131.h"/>
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\spi.h" lastModified="16870e78680">
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\fmc.h" lastModified="16870e78680">
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\NUC131.h"/>
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\i2c.c" lastModified="16870e78680">
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\NUC131.h"/>
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\spi.c" lastModified="16870e78680">
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\NUC131.h"/>
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\fmc.c" lastModified="16870e78a68">
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\NUC131.h"/>
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\system_NUC131.h" lastModified="16870e78680">
+      </source>
+      <source file="..\..\..\components\coocox-master\cmsis_core\source\core_cmFunc.h" lastModified="16870e78680">
+      </source>
+      <source file="..\..\..\components\coocox-master\cmsis_core\source\core_cmInstr.h" lastModified="16870e78680">
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\system_NUC131.c" lastModified="16870e78a68">
+         <include file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\NUC131.h"/>
+      </source>
+      <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\bpwm.h" lastModified="16870e78680">
+      </source>
+   </includePath>
+</dependencies>

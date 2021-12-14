@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Project version="2G - 2.0.5" name="D02">
+  <Target name="IC382_Robot_01" isCurrent="1">
+    <Device manufacturerId="8" manufacturerName="Nuvoton" chipId="1295" chipName="NUC131LD2AE" boardId="" boardName="" boardUrl="" coreId="" coreName=""/>
+    <BuildOption>
+      <Compile>
+        <Option name="OptimizationLevel" value="0"/>
+        <Option name="UseFPU" value="0"/>
+        <Option name="UserEditCompiler" value=""/>
+        <Option name="SupportCPlusplus" value="0"/>
+        <Option name="DEBUG" value="2"/>
+        <Option name="WARNING" value="1"/>
+        <Includepaths>
+          <Includepath path="."/>
+        </Includepaths>
+        <DefinedSymbols>
+          <Define name="NUC131LD2AE"/>
+        </DefinedSymbols>
+      </Compile>
+      <Link useDefault="0">
+        <Option name="DiscardUnusedSection" value="0"/>
+        <Option name="UserEditLinkder" value=""/>
+        <Option name="UseMemoryLayout" value="1"/>
+        <Option name="nostartfiles" value="0"/>
+        <Option name="LTO" value="0"/>
+        <Option name="IsNewStartupCode" value="1"/>
+        <Option name="Library" value="Not use C Library"/>
+        <LinkedLibraries/>
+        <MemoryAreas debugInFlashNotRAM="1">
+          <Memory name="IROM1" type="ReadOnly" size="0x00010000" startValue="0x00000000"/>
+          <Memory name="IRAM1" type="ReadWrite" size="0x00002000" startValue="0x20000000"/>
+          <Memory name="IROM2" type="ReadOnly" size="" startValue=""/>
+          <Memory name="IRAM2" type="ReadWrite" size="" startValue=""/>
+        </MemoryAreas>
+        <LocateLinkFile path="c:/users/student/appdata/roaming/coocox/coide/configuration/programdata/d02/arm-gcc-link.ld" type="0"/>
+      </Link>
+      <Output>
+        <Option name="OutputFileType" value="0"/>
+        <Option name="Path" value="./"/>
+        <Option name="Name" value="IC382_Robot_01"/>
+        <Option name="HEX" value="1"/>
+        <Option name="BIN" value="1"/>
+      </Output>
+      <User>
+        <UserRun name="Run#1" type="Before" checked="0" value=""/>
+        <UserRun name="Run#1" type="After" checked="0" value=""/>
+      </User>
+    </BuildOption>
+    <DebugOption>
+      <Option name="org.coocox.codebugger.gdbjtag.core.adapter" value="Nu-Link"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.debugMode" value="SWD"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.clockDiv" value="1M"/>
+      <Option name="org.coocox.codebugger.gdbjtag.corerunToMain" value="1"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.jlinkgdbserver" value="D:\Program Files (x86)\SEGGER\JLink_V490e\JLinkGDBServerCL.exe"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.userDefineGDBScript" value=""/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.targetEndianess" value="0"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.jlinkResetMode" value="Type 0: Normal"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.resetMode" value="SYSRESETREQ"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.ifSemihost" value="0"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.ifCacheRom" value="1"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.ipAddress" value="127.0.0.1"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.portNumber" value="2009"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.autoDownload" value="1"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.verify" value="1"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.downloadFuction" value="Erase Effected"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.defaultAlgorithm" value="C:\Users\student\AppData\Roaming\CooCox\CoIDE\config\flash\CooCox-Flash\CoIDE_NUC1xx_64K_Flash\NUC1xx_64.elf"/>
+    </DebugOption>
+    <ExcludeFile/>
+  </Target>
+  <Components path="./"/>
+  <LocalComponents/>
+  <Files>
+    <File name="components/NUC131_BSP_CMSIS/system_NUC131.c" path="components/coocox-master/NUC131_BSP_CMSIS/source/system_NUC131.c" type="1"/>
+    <File name="Bluetooth.txt" path="Bluetooth.txt" type="1"/>
+    <File name="components/cmsis_core/core_cmInstr.h" path="components/coocox-master/cmsis_core/source/core_cmInstr.h" type="1"/>
+    <File name="components/cmsis_core/core_cm7.h" path="components/coocox-master/cmsis_core/source/core_cm7.h" type="1"/>
+    <File name="components/cmsis_core/core_cmFunc.h" path="components/coocox-master/cmsis_core/source/core_cmFunc.h" type="1"/>
+    <File name="components/cmsis_core" path="" type="2"/>
+    <File name="components/NUC131_BSP_CMSIS/spi.h" path="components/coocox-master/NUC131_BSP_CMSIS/source/spi.h" type="1"/>
+    <File name="components/NUC131_BSP_CMSIS/can.h" path="components/coocox-master/NUC131_BSP_CMSIS/source/can.h" type="1"/>
+    <File name="Mobile_Or_Shooting_Source_Code/main_Bottom_MobilePlatform.txt" path="app/main_Bottom_MobilePlatform.txt" type="1"/>
+    <File name="components/cmsis_core/arm_common_tables.h" path="components/coocox-master/cmsis_core/source/arm_common_tables.h" type="1"/>
+    <File name="components/cmsis_core/arm_const_structs.h" path="components/coocox-master/cmsis_core/source/arm_const_structs.h" type="1"/>
+    <File name="components/NUC131_BSP_CMSIS/uart.h" path="components/coocox-master/NUC131_BSP_CMSIS/source/uart.h" type="1"/>
+    <File name="components/cmsis_core/core_sc300.h" path="components/coocox-master/cmsis_core/source/core_sc300.h" type="1"/>
+    <File name="Mobile_Or_Shooting_Source_Code" path="" type="2"/>
+    <File name="components/NUC131_BSP_CMSIS/uart.c" path="components/coocox-master/NUC131_BSP_CMSIS/source/uart.c" type="1"/>
+    <File name="Mobile_Or_Shooting_Source_Code/main_Top_ShootingPlatform.txt" path="app/main_Top_ShootingPlatform.txt" type="1"/>
+    <File name="components/NUC131_BSP_CMSIS/i2c.c" path="components/coocox-master/NUC131_BSP_CMSIS/source/i2c.c" type="1"/>
+    <File name="components/NUC131_BSP_CMSIS/clk.c" path="components/coocox-master/NUC131_BSP_CMSIS/source/clk.c" type="1"/>
+    <File name="components/cmsis_core/core_cm4_simd.h" path="components/coocox-master/cmsis_core/source/core_cm4_simd.h" type="1"/>
+    <File name="components/NUC131_BSP_CMSIS/adc.c" path="components/coocox-master/NUC131_BSP_CMSIS/source/adc.c" type="1"/>
+    <File name="components/NUC131_BSP_CMSIS/bpwm.c" path="components/coocox-master/NUC131_BSP_CMSIS/source/bpwm.c" type="1"/>
+    <File name="components/NUC131_BSP_CMSIS/wwdt.h" path="components/coocox-master/NUC131_BSP_CMSIS/source/wwdt.h" type="1"/>
+    <File name="components/cmsis_core/core_cm0plus.h" path="components/coocox-master/cmsis_core/source/core_cm0plus.h" type="1"/>
+    <File name="components/NUC131_BSP_CMSIS/fmc.h" path="components/coocox-master/NUC131_BSP_CMSIS/source/fmc.h" type="1"/>
+    <File name="components/cmsis_core/core_sc000.h" path="components/coocox-master/cmsis_core/source/core_sc000.h" type="1"/>
+    <File name="components/NUC131_BSP_CMSIS/startup_NUC1xx.c" path="components/coocox-master/NUC131_BSP_CMSIS/source/startup_NUC1xx.c" type="1"/>
+    <File name="components/C_library" path="" type="2"/>
+    <File name="components/NUC131_BSP_CMSIS/pwm.h" path="components/coocox-master/NUC131_BSP_CMSIS/source/pwm.h" type="1"/>
+    <File name="components/cmsis_core/core_cm0.h" path="components/coocox-master/cmsis_core/source/core_cm0.h" type="1"/>
+    <File name="components/NUC131_BSP_CMSIS/sys.c" path="components/coocox-master/NUC131_BSP_CMSIS/source/sys.c" type="1"/>
+    <File name="components/C_library/syscalls.c" path="components/coocox-master/C_library/source/syscalls.c" type="1"/>
+    <File name="Motor.txt" path="Motor.txt" type="1"/>
+    <File name="components/NUC131_BSP_CMSIS/wdt.c" path="components/coocox-master/NUC131_BSP_CMSIS/source/wdt.c" type="1"/>
+    <File name="components/NUC131_BSP_CMSIS/timer.h" path="components/coocox-master/NUC131_BSP_CMSIS/source/timer.h" type="1"/>
+    <File name="components/NUC131_BSP_CMSIS/spi.c" path="components/coocox-master/NUC131_BSP_CMSIS/source/spi.c" type="1"/>
+    <File name="components/NUC131_BSP_CMSIS/i2c.h" path="components/coocox-master/NUC131_BSP_CMSIS/source/i2c.h" type="1"/>
+    <File name="components/cmsis_core/core_cmSimd.h" path="components/coocox-master/cmsis_core/source/core_cmSimd.h" type="1"/>
+    <File name="components/NUC131_BSP_CMSIS/clk.h" path="components/coocox-master/NUC131_BSP_CMSIS/source/clk.h" type="1"/>
+    <File name="components/cmsis_core/core_cm3.h" path="components/coocox-master/cmsis_core/source/core_cm3.h" type="1"/>
+    <File name="components/NUC131_BSP_CMSIS/gpio.h" path="components/coocox-master/NUC131_BSP_CMSIS/source/gpio.h" type="1"/>
+    <File name="components/NUC131_BSP_CMSIS/fmc.c" path="components/coocox-master/NUC131_BSP_CMSIS/source/fmc.c" type="1"/>
+    <File name="components/NUC131_BSP_CMSIS/bpwm.h" path="components/coocox-master/NUC131_BSP_CMSIS/source/bpwm.h" type="1"/>
+    <File name="components/NUC131_BSP_CMSIS/timer.c" path="components/coocox-master/NUC131_BSP_CMSIS/source/timer.c" type="1"/>
+    <File name="components/NUC131_BSP_CMSIS/adc.h" path="components/coocox-master/NUC131_BSP_CMSIS/source/adc.h" type="1"/>
+    <File name="components/NUC131_BSP_CMSIS/wdt.h" path="components/coocox-master/NUC131_BSP_CMSIS/source/wdt.h" type="1"/>
+    <File name="components/NUC131_BSP_CMSIS/sys.h" path="components/coocox-master/NUC131_BSP_CMSIS/source/sys.h" type="1"/>
+    <File name="components/cmsis_core/core_cm4.h" path="components/coocox-master/cmsis_core/source/core_cm4.h" type="1"/>
+    <File name="components/NUC131_BSP_CMSIS/system_NUC131.h" path="components/coocox-master/NUC131_BSP_CMSIS/source/system_NUC131.h" type="1"/>
+    <File name="components" path="" type="2"/>
+    <File name="components/NUC131_BSP_CMSIS" path="" type="2"/>
+    <File name="components/NUC131_BSP_CMSIS/gpio.c" path="components/coocox-master/NUC131_BSP_CMSIS/source/gpio.c" type="1"/>
+    <File name="components/NUC131_BSP_CMSIS/NUC131.h" path="components/coocox-master/NUC131_BSP_CMSIS/source/NUC131.h" type="1"/>
+    <File name="components/NUC131_BSP_CMSIS/can.c" path="components/coocox-master/NUC131_BSP_CMSIS/source/can.c" type="1"/>
+    <File name="main.c" path="app/main.c" type="1"/>
+    <File name="components/NUC131_BSP_CMSIS/wwdt.c" path="components/coocox-master/NUC131_BSP_CMSIS/source/wwdt.c" type="1"/>
+    <File name="components/NUC131_BSP_CMSIS/pwm.c" path="components/coocox-master/NUC131_BSP_CMSIS/source/pwm.c" type="1"/>
+    <File name="components/cmsis_core/arm_math.h" path="components/coocox-master/cmsis_core/source/arm_math.h" type="1"/>
+  </Files>
+  <Bookmarks/>
+</Project>

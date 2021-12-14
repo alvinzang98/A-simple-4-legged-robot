@@ -1,8 +1,6 @@
 # A-simple-4-legged-robot
 
 <img src="image/title.png" alt="drawing" width="400"/>
-</br>
-</br>
 
 ## Highlights:
 Build a simple 4-legged robot capable of completing several tasks.</br>

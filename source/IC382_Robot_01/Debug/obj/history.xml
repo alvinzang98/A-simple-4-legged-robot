@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<history>
+   <processor signature="arm-none-eabi-gcc noversion nomachine -mcpu=cortex-m0 -mthumb -g2 -Wall -O0 -c -DNUC131LD2AE -IF:\D02 - 20190408\components\coocox-master\NUC131_BSP_CMSIS\source -IF:\D02 - 20190408 -IF:\D02 - 20190408\components\coocox-master\cmsis_core -IF:\D02 - 20190408\components\coocox-master\NUC131_BSP_CMSIS -IF:\D02 - 20190408\components\coocox-master\cmsis_core\source -IF:\D02 - 20190408\components\coocox-master">
+      <target file="spi.o" lastModified="169ffbc187d">
+         <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\spi.c" lastModified="16870e78680"/>
+      </target>
+      <target file="timer.o" lastModified="169ffbc1a23">
+         <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\timer.c" lastModified="16870e78680"/>
+      </target>
+      <target file="gpio.o" lastModified="169ffbc23a8">
+         <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\gpio.c" lastModified="16870e78680"/>
+      </target>
+      <target file="fmc.o" lastModified="169ffbc27cf">
+         <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\fmc.c" lastModified="16870e78680"/>
+      </target>
+      <target file="i2c.o" lastModified="169ffbc190a">
+         <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\i2c.c" lastModified="16870e78680"/>
+      </target>
+      <target file="bpwm.o" lastModified="169ffbc19a6">
+         <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\bpwm.c" lastModified="16870e78680"/>
+      </target>
+      <target file="wwdt.o" lastModified="169ffbc2435">
+         <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\wwdt.c" lastModified="16870e78680"/>
+      </target>
+      <target file="pwm.o" lastModified="169ffbc1b1d">
+         <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\pwm.c" lastModified="16870e78680"/>
+      </target>
+      <target file="clk.o" lastModified="169ffbc24f1">
+         <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\clk.c" lastModified="16870e78680"/>
+      </target>
+      <target file="can.o" lastModified="169ffbc232b">
+         <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\can.c" lastModified="16870e78680"/>
+      </target>
+      <target file="uart.o" lastModified="169ffbc1bd8">
+         <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\uart.c" lastModified="16870e78680"/>
+      </target>
+      <target file="system_NUC131.o" lastModified="169ffbc2723">
+         <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\system_NUC131.c" lastModified="16870e78680"/>
+      </target>
+      <target file="syscalls.o" lastModified="169ffbc259c">
+         <source file="..\..\..\components\coocox-master\C_library\source\syscalls.c" lastModified="16870e77eb0"/>
+      </target>
+      <target file="wdt.o" lastModified="169ffbc26a6">
+         <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\wdt.c" lastModified="16870e78680"/>
+      </target>
+      <target file="adc.o" lastModified="169ffbc2619">
+         <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\adc.c" lastModified="16870e78680"/>
+      </target>
+      <target file="sys.o" lastModified="169ffbc1c55">
+         <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\sys.c" lastModified="16870e78680"/>
+      </target>
+      <target file="startup_NUC1xx.o" lastModified="169ffbc1a71">
+         <source file="..\..\..\components\coocox-master\NUC131_BSP_CMSIS\source\startup_NUC1xx.c" lastModified="16870e78680"/>
+      </target>
+      <target file="main.o" lastModified="169ffbf26b0">
+         <source file="..\..\..\app\main.c" lastModified="169ffbf1aca"/>
+      </target>
+   </processor>
+</history>

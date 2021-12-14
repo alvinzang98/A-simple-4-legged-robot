@@ -1,0 +1,324 @@
+#include "NUC131.h"
+
+//==================================================
+// UART
+unsigned int  m_UART_RX_Result_Byte = 0;
+
+//==================================================
+// Motor
+unsigned int  m_Motor_Control_PWM_Frequency        = 0;
+unsigned int  m_Motor_Control_PWM_DutyCycle_R_01   = 0;
+unsigned int  m_Motor_Control_PWM_DutyCycle_L_01   = 0;
+unsigned int  m_Motor_Control_Direction_Value_R_01 = 0;
+unsigned int  m_Motor_Control_Direction_Value_L_01 = 0;
+
+//==================================================
+// Function
+void Funcation_Motor_Control(unsigned int Temp_Motor, unsigned int Temp_Direction, unsigned int Temp_PWM_DutyCycle, unsigned int Temp_PWM_Frequency);
+void SYS_Init(void);
+void SYS_Exit(void);
+void Startup_Init(void);
+
+void UART1_IRQHandler(void)
+{
+    uint32_t     u32IntSts= UART1->ISR;
+    uint8_t      Temp_UART_RX_Result_Buffer[1] = {0};
+    unsigned int Temp_UART_RX_Result_Byte      = 0;
+
+    if(u32IntSts & UART_IS_RX_READY(UART1))
+    {
+       	UART_Read(UART1, Temp_UART_RX_Result_Buffer, sizeof(Temp_UART_RX_Result_Buffer));
+       	Temp_UART_RX_Result_Byte = (unsigned int)Temp_UART_RX_Result_Buffer[0];
+       	m_UART_RX_Result_Byte = Temp_UART_RX_Result_Byte;
+       	//UART_Write(UART1, Temp_UART_RX_Result_Buffer, sizeof(Temp_UART_RX_Result_Buffer));
+    }
+}
+
+void Funcation_Motor_Control(unsigned int Temp_Motor, unsigned int Temp_Direction, unsigned int Temp_PWM_DutyCycle, unsigned int Temp_PWM_Frequency)
+/**
+* Motor Speed Out Control
+* @param Temp_Motor     : 1=Right, 2=Left
+* @param Temp_Direction : 1=Forward, 2=Backward
+* @param Temp_Speed     : 0-100
+*/
+
+{
+	//Temp_Motor : 1=Right, 2=Left
+
+
+	if (Temp_Motor == 1)
+	{
+		if (Temp_Direction == 1)
+		{
+			PA0 = 1; //Dir1 //TCL 0-->1
+		}
+		else if (Temp_Direction == 2)
+		{
+			PA0 = 0; //Dir1 //TCL 1-->0
+		}
+
+		if(((0<Temp_PWM_DutyCycle)&&(Temp_PWM_DutyCycle<=100))&&((100<=Temp_PWM_Frequency)&&(Temp_PWM_Frequency<=5000)))
+		{
+			PA5 = 1;
+			Temp_PWM_DutyCycle = 100 - Temp_PWM_DutyCycle;
+			PWM_ConfigOutputChannel(PWM0, 0, Temp_PWM_Frequency, Temp_PWM_DutyCycle);
+			PWM_EnableOutput(PWM0, PWM_CH_0_MASK);
+			PWM_Start(PWM0, PWM_CH_0_MASK);
+		}
+		else if((Temp_PWM_DutyCycle==0)&&((100<=Temp_PWM_Frequency)&&(Temp_PWM_Frequency<=5000)))
+		{
+			PA5 = 0;
+			PWM_ConfigOutputChannel(PWM0, 0, Temp_PWM_Frequency, Temp_PWM_DutyCycle);
+			PWM_EnableOutput(PWM0, PWM_CH_0_MASK);
+			PWM_Start(PWM0, PWM_CH_0_MASK);
+		}
+		else
+		{
+			Temp_PWM_Frequency = 500;
+			Temp_PWM_DutyCycle = 0;
+			PA5 = 0;
+			PWM_ConfigOutputChannel(PWM0, 0, Temp_PWM_Frequency, Temp_PWM_DutyCycle);
+			PWM_EnableOutput(PWM0, PWM_CH_0_MASK);
+			PWM_Start(PWM0, PWM_CH_0_MASK);
+		}
+	}
+	else if (Temp_Motor == 2)
+	{
+		if (Temp_Direction == 1)
+		{
+			PA1 = 0; //Dir2 //TCL 1-->0
+		}
+		else if (Temp_Direction == 2)
+		{
+			PA1 = 1; //Dir2 //TCL 0-->1
+		}
+
+		if(((0<Temp_PWM_DutyCycle)&&(Temp_PWM_DutyCycle<=100))&&((100<=Temp_PWM_Frequency)&&(Temp_PWM_Frequency<=5000)))
+		{
+			PA6 = 1;
+			Temp_PWM_DutyCycle = 100 - Temp_PWM_DutyCycle;
+			PWM_ConfigOutputChannel(PWM1, 0, Temp_PWM_Frequency, Temp_PWM_DutyCycle);
+			PWM_EnableOutput(PWM1, PWM_CH_0_MASK);
+			PWM_Start(PWM1, PWM_CH_0_MASK);
+		}
+		else if((Temp_PWM_DutyCycle==0)&&((100<=Temp_PWM_Frequency)&&(Temp_PWM_Frequency<=5000)))
+		{
+			PA6 = 0;
+			PWM_ConfigOutputChannel(PWM1, 0, Temp_PWM_Frequency, Temp_PWM_DutyCycle);
+			PWM_EnableOutput(PWM1, PWM_CH_0_MASK);
+			PWM_Start(PWM1, PWM_CH_0_MASK);
+		}
+		else
+		{
+			Temp_PWM_Frequency = 500;
+			Temp_PWM_DutyCycle = 0;
+			PA6 = 0;
+			PWM_ConfigOutputChannel(PWM1, 0, Temp_PWM_Frequency, Temp_PWM_DutyCycle);
+			PWM_EnableOutput(PWM1, PWM_CH_0_MASK);
+			PWM_Start(PWM1, PWM_CH_0_MASK);
+		}
+	}
+}
+
+void SYS_Init(void)
+{
+	//================================================================================
+	// Init Clock
+	//================================================================================
+
+    //==================================================
+    // Init System Clock
+    //==================================================
+    CLK_EnableXtalRC(CLK_PWRCON_OSC22M_EN_Msk);
+    CLK_WaitClockReady(CLK_CLKSTATUS_OSC22M_STB_Msk);
+    CLK_SetHCLK(CLK_CLKSEL0_HCLK_S_HIRC, CLK_CLKDIV_HCLK(1));
+    CLK_EnableXtalRC(CLK_PWRCON_XTL12M_EN_Msk);
+    CLK_WaitClockReady(CLK_CLKSTATUS_XTL12M_STB_Msk);
+    CLK_SetCoreClock(50000000);
+    //==================================================
+    // Init Module Clock - UART1
+    //==================================================
+    CLK_SetModuleClock(UART1_MODULE, CLK_CLKSEL1_UART_S_HXT, CLK_CLKDIV_UART(1));
+    CLK_EnableModuleClock(UART1_MODULE);
+    SYS_ResetModule(UART1_RST);
+    //==================================================
+    // Init Module Clock - PWM0
+    //==================================================
+    CLK_SetModuleClock(PWM0_MODULE, CLK_CLKSEL3_PWM0_S_PLL, 0);
+    CLK_EnableModuleClock(PWM0_MODULE);
+    SYS_ResetModule(PWM0_RST);
+    //==================================================
+    // Init Module Clock - PWM1
+    //==================================================
+    CLK_SetModuleClock(PWM1_MODULE, CLK_CLKSEL3_PWM1_S_PLL, 0);
+    CLK_EnableModuleClock(PWM1_MODULE);
+    SYS_ResetModule(PWM1_RST);
+
+
+    //================================================================================
+    // Init Multi Function Pin
+    //================================================================================
+
+    //==================================================
+    // Init Multi Function Pin - UART1
+    //==================================================
+    SYS->GPB_MFP &= ~(SYS_GPB_MFP_PB4_Msk | SYS_GPB_MFP_PB5_Msk);
+    SYS->GPB_MFP |= SYS_GPB_MFP_PB4_UART1_RXD | SYS_GPB_MFP_PB5_UART1_TXD;
+    //==================================================
+    // Init Multi Function Pin - PWM0
+    //==================================================
+    SYS->GPA_MFP &= ~(SYS_GPA_MFP_PA12_Msk);
+    SYS->GPA_MFP |= SYS_GPA_MFP_PA12_PWM0_CH0;
+    SYS->ALT_MFP4 &= ~(SYS_ALT_MFP4_PA12_Msk);
+    SYS->ALT_MFP4 |= SYS_ALT_MFP4_PA12_PWM0_CH0;
+    //==================================================
+    // Init Multi Function Pin - PWM1
+    //==================================================
+    SYS->GPA_MFP &= ~(SYS_GPA_MFP_PA2_Msk);
+    SYS->GPA_MFP |= SYS_GPA_MFP_PA2_PWM1_CH0;
+    SYS->ALT_MFP3 &= ~(SYS_ALT_MFP3_PA2_Msk);
+    SYS->ALT_MFP3 |= SYS_ALT_MFP3_PA2_PWM1_CH0;
+}
+
+void SYS_Exit(void)
+{
+	UART_Close(UART1);
+	PWM_Stop(PWM0, PWM_CH_0_MASK);
+	PWM_Stop(PWM1, PWM_CH_0_MASK);
+}
+
+void Startup_Init(void)
+{
+	/*
+	//==================================================
+	I/O Configuration
+	//==================================================
+	Motor
+	//==================================================
+	Right 01
+	Enable --> 37 --> PA05
+	DIR    --> 32 --> PA00
+	PWM    --> 28 --> PA12 --> PWM0_CH0
+	Left 02
+	Enable --> 38 --> PA06
+	DIR    --> 33 --> PA01
+	PWM    --> 34 --> PA02 --> PWM1_CH0
+	//==================================================
+	*/
+
+	GPIO_SetMode(PA, BIT5,  GPIO_PMD_OUTPUT); // R_Enable
+	GPIO_SetMode(PA, BIT6,  GPIO_PMD_OUTPUT); // L_Enable
+
+	GPIO_SetMode(PA, BIT0,  GPIO_PMD_OUTPUT); // R_Direction
+	GPIO_SetMode(PA, BIT1,  GPIO_PMD_OUTPUT); // L_Direction
+
+	m_Motor_Control_PWM_Frequency        = 500;
+	m_Motor_Control_PWM_DutyCycle_R_01   = 0;
+	m_Motor_Control_PWM_DutyCycle_L_01   = 0;
+	m_Motor_Control_Direction_Value_R_01 = 1;
+	m_Motor_Control_Direction_Value_L_01 = 1;
+	Funcation_Motor_Control(1, m_Motor_Control_Direction_Value_R_01, m_Motor_Control_PWM_DutyCycle_R_01, m_Motor_Control_PWM_Frequency);
+	Funcation_Motor_Control(2, m_Motor_Control_Direction_Value_L_01, m_Motor_Control_PWM_DutyCycle_L_01, m_Motor_Control_PWM_Frequency);
+
+	UART_Open(UART1, 9600);
+	UART_EnableInt(UART1, (UART_IER_RDA_IEN_Msk));
+	NVIC_EnableIRQ(UART1_IRQn);
+}
+/*
+int main(void)
+{
+	unsigned int Temp_CMD_00;
+
+	SYS_UnlockReg();
+	SYS_Init();
+	SYS_LockReg();
+
+	Startup_Init();
+
+//	m_Motor_Control_PWM_Frequency        = 500;
+//	m_Motor_Control_PWM_DutyCycle_R_01   = 10;
+//	m_Motor_Control_PWM_DutyCycle_L_01   = 20;
+//	m_Motor_Control_Direction_Value_R_01 = 1;
+//	m_Motor_Control_Direction_Value_L_01 = 1;
+//
+//	Funcation_Motor_Control(1, m_Motor_Control_Direction_Value_R_01, m_Motor_Control_PWM_DutyCycle_R_01, m_Motor_Control_PWM_Frequency);
+//	Funcation_Motor_Control(2, m_Motor_Control_Direction_Value_L_01, m_Motor_Control_PWM_DutyCycle_L_01, m_Motor_Control_PWM_Frequency);
+
+    while(1)
+    {
+    	Temp_CMD_00 = m_UART_RX_Result_Byte;
+    	//m_UART_RX_Result_Byte=0;
+
+    	if(Temp_CMD_00 == 's') // stop
+    	{
+    		m_Motor_Control_PWM_Frequency        = 500;
+    		m_Motor_Control_PWM_DutyCycle_R_01   = 0;
+    		m_Motor_Control_PWM_DutyCycle_L_01   = 0;
+    		m_Motor_Control_Direction_Value_R_01 = 1;
+    		m_Motor_Control_Direction_Value_L_01 = 1;
+
+    		Funcation_Motor_Control(1, m_Motor_Control_Direction_Value_R_01, m_Motor_Control_PWM_DutyCycle_R_01, m_Motor_Control_PWM_Frequency);
+    		Funcation_Motor_Control(2, m_Motor_Control_Direction_Value_L_01, m_Motor_Control_PWM_DutyCycle_L_01, m_Motor_Control_PWM_Frequency);
+    	}
+    	else if (Temp_CMD_00 == 'f') // forward
+    	{
+    		m_Motor_Control_PWM_Frequency        = 500;
+    		m_Motor_Control_PWM_DutyCycle_R_01   = 80;
+    		m_Motor_Control_PWM_DutyCycle_L_01   = 20;
+    		m_Motor_Control_Direction_Value_R_01 = 1;
+    		m_Motor_Control_Direction_Value_L_01 = 1;
+
+    		Funcation_Motor_Control(1, m_Motor_Control_Direction_Value_R_01, m_Motor_Control_PWM_DutyCycle_R_01, m_Motor_Control_PWM_Frequency);
+    		Funcation_Motor_Control(2, m_Motor_Control_Direction_Value_L_01, m_Motor_Control_PWM_DutyCycle_L_01, m_Motor_Control_PWM_Frequency);
+    	}
+    	else if (Temp_CMD_00 == 'b') // backward
+    	{
+    		m_Motor_Control_PWM_Frequency        = 500;
+    	    m_Motor_Control_PWM_DutyCycle_R_01   = 40;
+    	    m_Motor_Control_PWM_DutyCycle_L_01   = 60;
+    	    m_Motor_Control_Direction_Value_R_01 = 2;
+    	    m_Motor_Control_Direction_Value_L_01 = 2;
+
+    	    Funcation_Motor_Control(1, m_Motor_Control_Direction_Value_R_01, m_Motor_Control_PWM_DutyCycle_R_01, m_Motor_Control_PWM_Frequency);
+    	    Funcation_Motor_Control(2, m_Motor_Control_Direction_Value_L_01, m_Motor_Control_PWM_DutyCycle_L_01, m_Motor_Control_PWM_Frequency);
+    	}
+    	else if (Temp_CMD_00 == 'r') // forward right
+    	{
+    		m_Motor_Control_PWM_Frequency        = 500;
+    		m_Motor_Control_PWM_DutyCycle_R_01   = 60;
+    		m_Motor_Control_PWM_DutyCycle_L_01   = 20;
+    		m_Motor_Control_Direction_Value_R_01 = 1;
+    		m_Motor_Control_Direction_Value_L_01 = 1;
+
+    	    Funcation_Motor_Control(1, m_Motor_Control_Direction_Value_R_01, m_Motor_Control_PWM_DutyCycle_R_01, m_Motor_Control_PWM_Frequency);
+    	    Funcation_Motor_Control(2, m_Motor_Control_Direction_Value_L_01, m_Motor_Control_PWM_DutyCycle_L_01, m_Motor_Control_PWM_Frequency);
+    	}
+    	else if (Temp_CMD_00 == 'l') // forward left
+    	{
+    		m_Motor_Control_PWM_Frequency        = 500;
+    	    m_Motor_Control_PWM_DutyCycle_R_01   = 80;
+    	    m_Motor_Control_PWM_DutyCycle_L_01   = 40;
+    	    m_Motor_Control_Direction_Value_R_01 = 1;
+    	    m_Motor_Control_Direction_Value_L_01 = 1;
+
+    	    Funcation_Motor_Control(1, m_Motor_Control_Direction_Value_R_01, m_Motor_Control_PWM_DutyCycle_R_01, m_Motor_Control_PWM_Frequency);
+    	    Funcation_Motor_Control(2, m_Motor_Control_Direction_Value_L_01, m_Motor_Control_PWM_DutyCycle_L_01, m_Motor_Control_PWM_Frequency);
+    	}
+    	else if (Temp_CMD_00 == 'c') // center rotate
+    	{
+    		m_Motor_Control_PWM_Frequency        = 500;
+    		m_Motor_Control_PWM_DutyCycle_R_01   = 70;
+    	    m_Motor_Control_PWM_DutyCycle_L_01   = 70;
+    	    m_Motor_Control_Direction_Value_R_01 = 1;
+    	    m_Motor_Control_Direction_Value_L_01 = 2;
+
+    	    Funcation_Motor_Control(1, m_Motor_Control_Direction_Value_R_01, m_Motor_Control_PWM_DutyCycle_R_01, m_Motor_Control_PWM_Frequency);
+    	    Funcation_Motor_Control(2, m_Motor_Control_Direction_Value_L_01, m_Motor_Control_PWM_DutyCycle_L_01, m_Motor_Control_PWM_Frequency);
+    	}
+    }
+
+    SYS_Exit();
+
+    return 0;
+}
+*/

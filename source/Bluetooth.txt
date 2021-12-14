@@ -1,0 +1,263 @@
+#include "NUC131.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+
+//=========================================================
+// Bottom - Mobile Platform
+//=========================================================
+// Pin Mapping
+//=========================================================
+// BT_Control_UART_TX	PB0/UART0_RXD
+// BT_Control_UART_RX	PB1/UART0_TXD
+//=========================================================
+
+
+//=========================================================
+// Robot Action Command
+//=========================================================
+unsigned int 	g_User_Action_CMD_00	= 0;
+//=========================================================
+
+
+
+//=========================================================
+// UART
+//=========================================================
+unsigned int	g_UART_00_RX_Result_Byte 			= 0;
+unsigned int  	g_UART_05_RX_Result_Byte 			= 0;
+//=========================================================
+
+
+
+//=========================================================
+void f_SYS_Init(void);
+void f_SYS_Exit(void);
+void f_Startup_Init(void);
+//=========================================================
+
+
+
+void UART02_IRQHandler(void)
+{
+    uint32_t     u32IntSts= UART0->ISR;
+    uint8_t      t_UART_00_RX_Result_Buffer[1] = {0};
+    unsigned int t_UART_00_RX_Result_Byte      = 0;
+
+    if(u32IntSts & UART_IS_RX_READY(UART0))
+    {
+       	UART_Read(UART0, t_UART_00_RX_Result_Buffer, sizeof(t_UART_00_RX_Result_Buffer));
+       	t_UART_00_RX_Result_Byte = (unsigned int)t_UART_00_RX_Result_Buffer[0];
+       	g_UART_00_RX_Result_Byte = t_UART_00_RX_Result_Byte;
+       	UART_Write(UART0, t_UART_00_RX_Result_Buffer, sizeof(t_UART_00_RX_Result_Buffer));
+    }
+}
+
+void UART5_IRQHandler(void)
+{
+//    uint32_t     u32IntSts= UART5->ISR;
+//    uint8_t      t_UART_05_RX_Result_Buffer[1] = {0};
+//    unsigned int t_UART_05_RX_Result_Byte      = 0;
+//
+//    if(u32IntSts & UART_IS_RX_READY(UART5))
+//    {
+//       	UART_Read(UART5, t_UART_05_RX_Result_Buffer, sizeof(t_UART_05_RX_Result_Buffer));
+//       	t_UART_05_RX_Result_Byte = (unsigned int)t_UART_05_RX_Result_Buffer[0];
+//       	g_UART_05_RX_Result_Byte = t_UART_05_RX_Result_Byte;
+//       	UART_Write(UART5, t_UART_05_RX_Result_Buffer, sizeof(t_UART_05_RX_Result_Buffer));
+//    }
+}
+
+
+
+void f_Motor_Control_Delay(void)
+{
+	int n = 0;
+	int DoSomething = 0;
+	for(n=0;n<5000;n++)
+	{
+		DoSomething = 0;
+	}
+}
+
+
+
+
+void f_SYS_Init(void)
+{
+	//================================================================================
+	// Init Clock
+	//================================================================================
+
+    //==================================================
+    // Init System Clock
+    //==================================================
+    CLK_EnableXtalRC(CLK_PWRCON_OSC22M_EN_Msk);
+    CLK_WaitClockReady(CLK_CLKSTATUS_OSC22M_STB_Msk);
+    CLK_SetHCLK(CLK_CLKSEL0_HCLK_S_HIRC, CLK_CLKDIV_HCLK(1));
+    CLK_EnableXtalRC(CLK_PWRCON_XTL12M_EN_Msk);
+    CLK_WaitClockReady(CLK_CLKSTATUS_XTL12M_STB_Msk);
+    CLK_SetCoreClock(50000000);
+    //==================================================
+    // Init Module Clock - UART0
+    //==================================================
+    CLK_SetModuleClock(UART0_MODULE, CLK_CLKSEL1_UART_S_HXT, CLK_CLKDIV_UART(1));
+    CLK_EnableModuleClock(UART0_MODULE);
+    SYS_ResetModule(UART0_RST);
+    //==================================================
+    // Init Module Clock - UART5
+    //==================================================
+    CLK_SetModuleClock(UART5_MODULE, CLK_CLKSEL1_UART_S_HXT, CLK_CLKDIV_UART(1));
+    CLK_EnableModuleClock(UART5_MODULE);
+    SYS_ResetModule(UART5_RST);
+
+    //================================================================================
+    // Init Multi Function Pin
+    //================================================================================
+    //==================================================
+    // Init Multi Function Pin - UART0
+    //==================================================
+    SYS->GPB_MFP  &= ~(SYS_GPB_MFP_PB0_Msk       | SYS_GPB_MFP_PB1_Msk);
+    SYS->GPB_MFP  |=   SYS_GPB_MFP_PB0_UART0_RXD | SYS_GPB_MFP_PB1_UART0_TXD;
+    //==================================================
+    // Init Multi Function Pin - UART5
+    //==================================================
+    SYS->GPA_MFP  &= ~(SYS_GPA_MFP_PA0_Msk       | SYS_GPA_MFP_PA1_Msk);
+    SYS->GPA_MFP  |=   SYS_GPA_MFP_PA0_UART5_TXD | SYS_GPA_MFP_PA1_UART5_RXD;
+}
+
+
+
+void f_SYS_Exit(void)
+{
+	UART_Close(UART0);
+	UART_Close(UART5);
+}
+
+
+
+void f_Startup_Init(void)
+{
+	//==================================================
+	// I/O Configuration
+	//==================================================
+	// Init (UART0)
+	UART_Open(UART0, 115200);
+	UART_EnableInt(UART0, (UART_IER_RDA_IEN_Msk));
+	NVIC_EnableIRQ(UART02_IRQn);
+	// Init (UART5)
+	UART_Open(UART5, 115200);
+	UART_EnableInt(UART5, (UART_IER_RDA_IEN_Msk));
+	NVIC_EnableIRQ(UART5_IRQn);
+}
+
+
+
+int main(void)
+{
+	unsigned int t_Count_01 = 0;
+	unsigned int DoSomething = 0;
+
+	unsigned int m_User_Action_CMD_00;
+
+	SYS_UnlockReg();
+	f_SYS_Init();
+	SYS_LockReg();
+
+	f_Startup_Init();
+
+	m_User_Action_CMD_00 	= 'z';
+	char 	m_Motor_CMD_01[10]	= {0,1,2,3,4,5,6,7,8,9};
+
+    while(1)
+    {
+    	//0x55 0x55 0x01 0x07 0x01 0xF4 0x01 0x00 0x00 0x01 // 500
+    	m_Motor_CMD_01[0] = 0x55;
+    	m_Motor_CMD_01[1] = 0x55;
+    	m_Motor_CMD_01[2] = 0x01;
+    	m_Motor_CMD_01[3] = 0x07;
+    	m_Motor_CMD_01[4] = 0x01;
+    	m_Motor_CMD_01[5] = 0x52;
+    	m_Motor_CMD_01[6] = 0x03;
+    	m_Motor_CMD_01[7] = 0xF4;
+    	m_Motor_CMD_01[8] = 0x01;
+    	m_Motor_CMD_01[9] = 0xAA;
+    	UART_Write(UART0, m_Motor_CMD_01, sizeof(m_Motor_CMD_01));
+
+
+
+//    	m_User_Action_CMD_00 = g_UART_00_RX_Result_Byte;
+//
+//    	if(m_User_Action_CMD_00 == 'a') // Bottom Stop
+//    	{
+//    		//===========================================================
+//    		m_User_Action_CMD_00  = 'z';
+//    		//===========================================================
+//    		char 	m_Motor_CMD_01[10]	= {0,1,2,3,4,5,6,7,8,9};
+//    		//0x55 0x55 0x01 0x07 0x01 0x64 0x00 0x00 0x00 0x92 // 100
+//    		m_Motor_CMD_01[0] = 0x55;
+//    		m_Motor_CMD_01[1] = 0x55;
+//    		m_Motor_CMD_01[2] = 0x01;
+//    		m_Motor_CMD_01[3] = 0x07;
+//    		m_Motor_CMD_01[4] = 0x01;
+//    		m_Motor_CMD_01[5] = 0x52;
+//    		m_Motor_CMD_01[6] = 0x03;
+//    		m_Motor_CMD_01[7] = 0xF4;
+//    		m_Motor_CMD_01[8] = 0x01;
+//    		m_Motor_CMD_01[9] = 0xAA;
+//    		UART_Write(UART5, m_Motor_CMD_01, sizeof(m_Motor_CMD_01));
+//    		//===========================================================
+//    	}
+//    	else if (m_User_Action_CMD_00 == 'b') // Bottom Forward
+//    	{
+//    		//===========================================================
+//    		m_User_Action_CMD_00  = 'z';
+//    		//===========================================================
+//    		char 	m_Motor_CMD_01[10]	= {0,1,2,3,4,5,6,7,8,9};
+//    		//0x55 0x55 0x01 0x07 0x01 0xF4 0x01 0x00 0x00 0x01 // 500
+//    		m_Motor_CMD_01[0] = 0x55;
+//    		m_Motor_CMD_01[1] = 0x55;
+//    		m_Motor_CMD_01[2] = 0x01;
+//    		m_Motor_CMD_01[3] = 0x07;
+//    		m_Motor_CMD_01[4] = 0x01;
+//    		m_Motor_CMD_01[5] = 0x2C;
+//    		m_Motor_CMD_01[6] = 0x01;
+//    		m_Motor_CMD_01[7] = 0xD0;
+//    		m_Motor_CMD_01[8] = 0x07;
+//    		m_Motor_CMD_01[9] = 0xEE;
+//    		UART_Write(UART5, m_Motor_CMD_01, sizeof(m_Motor_CMD_01));
+//    		//===========================================================
+//    	}
+//    	else if (m_User_Action_CMD_00 == 'c') // Bottom Forward
+//    	{
+//    		//===========================================================
+//    		m_User_Action_CMD_00  = 'z';
+//    		//===========================================================
+//    		char 	m_Motor_CMD_01[10]	= {0,1,2,3,4,5,6,7,8,9};
+//    		//0x55 0x55 0x01 0x07 0x01 0x84 0x03 0x00 0x00 0x6F // 900
+//    		m_Motor_CMD_01[0] = 0x55;
+//    		m_Motor_CMD_01[1] = 0x55;
+//    		m_Motor_CMD_01[2] = 0x01;
+//    		m_Motor_CMD_01[3] = 0x07;
+//    		m_Motor_CMD_01[4] = 0x01;
+//    		m_Motor_CMD_01[5] = 0x64;
+//    		m_Motor_CMD_01[6] = 0x00;
+//    		m_Motor_CMD_01[7] = 0xD0;
+//    		m_Motor_CMD_01[8] = 0x07;
+//    		m_Motor_CMD_01[9] = 0xB4;
+//    		UART_Write(UART5, m_Motor_CMD_01, sizeof(m_Motor_CMD_01));
+//    		//===========================================================
+//    	}
+
+    	for(t_Count_01=0;t_Count_01<3000000;t_Count_01++)
+    	{
+    	    DoSomething = 999;
+    	}
+    }
+
+    f_SYS_Exit();
+
+    return 0;
+}
